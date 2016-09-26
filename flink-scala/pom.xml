@@ -111,6 +111,9 @@ under the License.
 			<plugin>
 				<groupId>com.github.siom79.japicmp</groupId>
 				<artifactId>japicmp-maven-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 
 			<!-- Scala Compiler -->
@@ -150,6 +153,10 @@ under the License.
 						   <version>${scala.macros.version}</version>
 					   </compilerPlugin>
 				   </compilerPlugins>
+					<excludes>
+						<exclude>**/hadoop/mapred/*.scala</exclude>
+						<exclude>**/hadoop/mapreduce/*.scala</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			

@@ -29,7 +29,7 @@ import org.apache.flink.api.java.operators.DataSource
 import org.apache.flink.api.java.typeutils.runtime.kryo.KryoSerializer
 import org.apache.flink.api.java.typeutils.{PojoTypeInfo, TupleTypeInfoBase, ValueTypeInfo}
 import org.apache.flink.api.java.{CollectionEnvironment, ExecutionEnvironment => JavaEnv}
-import org.apache.flink.api.scala.hadoop.{mapred, mapreduce}
+//import org.apache.flink.api.scala.hadoop.{mapred, mapreduce}
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.core.fs.Path
 import org.apache.flink.types.StringValue
@@ -408,7 +408,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
     require(producedType != null, "Produced type must not be null")
     wrap(new DataSource[T](javaEnv, inputFormat, producedType, getCallLocationName()))
   }
-
+/*
   /**
    * Creates a [[DataSet]] from the given [[org.apache.hadoop.mapred.FileInputFormat]]. The
    * given inputName is set on the given job.
@@ -424,8 +424,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
     val result = createHadoopInput(mapredInputFormat, key, value, job)
     MapredFileInputFormat.addInputPath(job, new HadoopPath(inputPath))
     result
-  }
-
+  }*/
+/*
   /**
    * Creates a [[DataSet]] from the given [[org.apache.hadoop.mapred.FileInputFormat]]. A
    * [[org.apache.hadoop.mapred.JobConf]] with the given inputPath is created.
@@ -438,8 +438,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
       inputPath: String)
       (implicit tpe: TypeInformation[(K, V)]): DataSet[(K, V)] = {
     readHadoopFile(mapredInputFormat, key, value, inputPath, new JobConf)
-  }
-
+  }*/
+/*
   /**
    * Creates a [[DataSet]] from [[org.apache.hadoop.mapred.SequenceFileInputFormat]]
    * A [[org.apache.hadoop.mapred.JobConf]] with the given inputPath is created.
@@ -452,8 +452,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
       (implicit tpe: TypeInformation[(K, V)]): DataSet[(K, V)] = {
     readHadoopFile(new org.apache.hadoop.mapred.SequenceFileInputFormat[K, V],
       key, value, inputPath)
-  }
-
+  }*/
+/*
   /**
    * Creates a [[DataSet]] from the given [[org.apache.hadoop.mapred.InputFormat]].
    */
@@ -466,8 +466,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
       (implicit tpe: TypeInformation[(K, V)]): DataSet[(K, V)] = {
     val hadoopInputFormat = new mapred.HadoopInputFormat[K, V](mapredInputFormat, key, value, job)
     createInput(hadoopInputFormat)
-  }
-
+  }*/
+/*
   /**
    * Creates a [[DataSet]] from the given [[org.apache.hadoop.mapreduce.lib.input.FileInputFormat]].
    * The given inputName is set on the given job.
@@ -484,7 +484,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
     MapreduceFileInputFormat.addInputPath(job, new HadoopPath(inputPath))
     result
   }
-
+*//*
   /**
    * Creates a [[DataSet]] from the given
    * [[org.apache.hadoop.mapreduce.lib.input.FileInputFormat]]. A
@@ -499,7 +499,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
       (implicit tpe: TypeInformation[(K, V)]): DataSet[Tuple2[K, V]] = {
     readHadoopFile(mapreduceInputFormat, key, value, inputPath, Job.getInstance)
   }
-
+*//*
   /**
    * Creates a [[DataSet]] from the given [[org.apache.hadoop.mapreduce.InputFormat]].
    */
@@ -513,7 +513,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
     val hadoopInputFormat =
       new mapreduce.HadoopInputFormat[K, V](mapreduceInputFormat, key, value, job)
     createInput(hadoopInputFormat)
-  }
+  }*/
 
   /**
    * Creates a DataSet from the given non-empty [[Iterable]].
