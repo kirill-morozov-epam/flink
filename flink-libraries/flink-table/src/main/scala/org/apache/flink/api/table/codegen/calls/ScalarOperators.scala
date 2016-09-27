@@ -20,12 +20,15 @@ package org.apache.flink.api.table.codegen.calls
 import org.apache.calcite.avatica.util.DateTimeUtils.MILLIS_PER_DAY
 import org.apache.calcite.avatica.util.{DateTimeUtils, TimeUnitRange}
 import org.apache.calcite.util.BuiltInMethod
+import org.apache.flink.api.common.typeinfo.BasicArrayTypeInfo._
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo._
 import org.apache.flink.api.common.typeinfo.{NumericTypeInfo, SqlTimeTypeInfo, TypeInformation}
 import org.apache.flink.api.table.codegen.CodeGenUtils._
 import org.apache.flink.api.table.codegen.{CodeGenException, GeneratedExpression}
 import org.apache.flink.api.table.typeutils.IntervalTypeInfo
 import org.apache.flink.api.table.typeutils.TypeCheckUtils._
+
+import scala.collection.mutable
 
 object ScalarOperators {
 
@@ -407,6 +410,16 @@ object ScalarOperators {
       operand.code,
       BOOLEAN_TYPE_INFO)
   }
+
+  def generateArray(operand: mutable.Buffer[GeneratedExpression]): GeneratedExpression = {
+    var stringAccum = "java.lang.String[] "+operand(0).resultTerm+"= {"
+    operand.foreach(entry => {
+      "= (\".*\");".r.findAllIn(entry.code).matchData foreach { m => stringAccum += m.group(1)+"," }
+    })
+    stringAccum = stringAccum.substring(0,stringAccum.length-1)+"};"
+    GeneratedExpression(operand.head.resultTerm,GeneratedExpression.NEVER_NULL,stringAccum,STRING_ARRAY_TYPE_INFO)
+  }
+
 
   def generateIsNotFalse(operand: GeneratedExpression): GeneratedExpression = {
     GeneratedExpression(

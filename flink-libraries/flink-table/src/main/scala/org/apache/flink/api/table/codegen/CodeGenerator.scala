@@ -845,6 +845,10 @@ class CodeGenerator(
       case AS =>
         operands.head
 
+      case ARRAY_VALUE_CONSTRUCTOR =>
+        generateArray(operands)
+
+
       // string arithmetic
       case CONCAT =>
         val left = operands.head

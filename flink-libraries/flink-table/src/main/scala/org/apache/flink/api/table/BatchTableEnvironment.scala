@@ -241,7 +241,7 @@ abstract class BatchTableEnvironment(
   protected def translate[A](table: Table)(implicit tpe: TypeInformation[A]): DataSet[A] = {
 
     val relNode = table.getRelNode
-
+    println(s" Execution plan before is \n\n ${RelOptUtil.toString(relNode)}\n\n")
     // decorrelate
     val decorPlan = RelDecorrelator.decorrelateQuery(relNode)
 
@@ -254,6 +254,7 @@ abstract class BatchTableEnvironment(
     }
     catch {
       case e: CannotPlanException =>
+        e.printStackTrace()
         throw new TableException(
           s"Cannot generate a valid execution plan for the given query: \n\n" +
             s"${RelOptUtil.toString(relNode)}\n" +
@@ -268,6 +269,8 @@ abstract class BatchTableEnvironment(
       case a: AssertionError =>
         throw a.getCause
     }
+    println(s" Execution plan after is \n\n ${RelOptUtil.toString(relNode)}\n\n")
+//    println("")
 
     dataSetPlan match {
       case node: DataSetRel =>

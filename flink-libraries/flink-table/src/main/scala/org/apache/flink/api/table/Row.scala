@@ -21,7 +21,7 @@ package org.apache.flink.api.table
  * This is used for executing Table API operations. We use manually generated
  * TypeInfo to check the field types and create serializers and comparators.
  */
-class Row(arity: Int) extends Product {
+class Row(arity: Int) extends Product with Serializable {
 
   private val fields = new Array[Any](arity)
 
