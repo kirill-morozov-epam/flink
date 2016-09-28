@@ -153,10 +153,6 @@ under the License.
 						   <version>${scala.macros.version}</version>
 					   </compilerPlugin>
 				   </compilerPlugins>
-					<excludes>
-						<exclude>**/hadoop/mapred/*.scala</exclude>
-						<exclude>**/hadoop/mapreduce/*.scala</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 			
